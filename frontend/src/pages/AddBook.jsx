@@ -1,7 +1,44 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const AddBook = () => {
-  
+  const [checked, setChecked] = useState(false);
+  const [book, setBook] = useState({
+    name: '',
+    author: '',
+    desc: '',
+    price: '',
+    image: '',
+  });
+
+  const handleChange = (e) => {
+    setBook((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const sendRequest = async () => {
+    try {
+      await axios
+        .post('http://localhost:5000/books', {
+          name: String(book.name),
+          author: String(book.author),
+          desc: String(book.desc),
+          price: Number(book.price),
+          image: String(book.image),
+          available: Boolean(checked),
+        })
+        .then((res) => res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    sendRequest();
+  };
   return (
     <div>
       <div>
@@ -28,8 +65,8 @@ const AddBook = () => {
               type="text"
               id="author"
               name="author"
-              onChange={handleChange}
               value={book.author}
+              onChange={handleChange}
               className="mt-1 p-2 border border-gray-500 rounded w-full required"
             />
           </div>
@@ -67,15 +104,15 @@ const AddBook = () => {
             <input
               type="text"
               id="image"
-              name="img"
-              value={book.img}
+              name="image"
+              value={book.image}
               onChange={handleChange}
               className="mt-1 p-2 border border-gray-500 rounded w-full required"
             />
           </div>
           <div>
             <input
-              type="radio"
+              type="checkbox"
               id="available"
               name="available"
               checked={checked}
