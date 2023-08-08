@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const router = require('./routes/book-route');
-const cors = require('cors');
+
 require('dotenv').config();
 const cors = require('cors');
 

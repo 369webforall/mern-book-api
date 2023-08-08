@@ -21,24 +21,22 @@ const AllBooks = () => {
     getAllBook();
   }, []);
 
-  const deleteBook = async (id)=>{
-await axios.delete(`http://localhost:5000/books/${id}`)
-.then((res)=>{
-  console.log(res)
-  if(res){
-    getAllBook();
-    navigate('/all-books')
-    
-  }
-})
-  }
+  const deleteBook = async (id) => {
+    await axios.delete(`http://localhost:5000/books/${id}`).then((res) => {
+      console.log(res);
+      if (res) {
+        getAllBook();
+        navigate('/all-books');
+      }
+    });
+  };
 
   return (
     <div>
-      A<h1>Show all Books</h1>
-      <div className="flex gap-2">
+      <h1>Show all Books</h1>
+      <div className="flex gap-2 flex-wrap">
         {books.map((book) => (
-          <Book book={book} key={book._id}  deleteBook={deleteBook}/>
+          <Book book={book} key={book._id} deleteBook={deleteBook} />
         ))}
       </div>
     </div>
