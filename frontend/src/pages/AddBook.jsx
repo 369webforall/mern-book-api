@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
 const AddBook = () => {
+  const navigate = useNavigate();
   const [checked, setChecked] = useState(false);
   const [book, setBook] = useState({
     name: '',
@@ -29,7 +30,18 @@ const AddBook = () => {
           image: String(book.image),
           available: Boolean(checked),
         })
-        .then((res) => res.data);
+        .then((res) => {
+          if (res.data) {
+            setBook({
+              name: '',
+              author: '',
+              desc: '',
+              price: '',
+              image: '',
+            });
+          }
+          navigate('/all-books');
+        });
     } catch (err) {
       console.log(err);
     }
