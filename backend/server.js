@@ -1,12 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const router = require('./routes/book-route');
+const cors = require('cors');
 require('dotenv').config();
 const cors = require('cors');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(cors());
 
 app.use('/books', router);
 
